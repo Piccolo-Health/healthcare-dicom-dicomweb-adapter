@@ -20,6 +20,7 @@ import com.google.cloud.healthcare.imaging.dicomadapter.AetDictionary.Aet;
 import com.google.cloud.healthcare.imaging.dicomadapter.monitoring.Event;
 import com.google.cloud.healthcare.imaging.dicomadapter.monitoring.MonitoringService;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import org.dcm4che3.data.Attributes;
@@ -159,7 +160,7 @@ public class StorageCommitmentService extends AbstractDicomService {
           } else {
             presentInstances.add(cmtItem);
           }
-        } catch (DicomServiceException | IDicomWebClient.DicomWebException e) {
+        } catch (DicomServiceException | DicomWebException | UnsupportedEncodingException e) {
           MonitoringService.addEvent(Event.COMMITMENT_QIDORS_ERROR);
           log.error("Commitment QidoPath/QidoRs error: ", e);
 

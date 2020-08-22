@@ -15,6 +15,7 @@
 package com.google.cloud.healthcare.imaging.dicomadapter;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class AttributesUtil {
    * @param includeFields additonal includeFields for QIDO-RS
    */
   public static String attributesToQidoPath(Attributes attrs, String... includeFields)
-      throws DicomServiceException {
+          throws DicomServiceException, UnsupportedEncodingException {
     HashSet<Integer> nonEmptyKeys = new HashSet<>();
     HashSet<String> includeFieldSet = new HashSet<>(Arrays.asList(includeFields));
     // SpecificCharacterSet is not supported, and passing it as param or include would be wrong
@@ -151,7 +152,7 @@ public class AttributesUtil {
 
       for (String value : values) {
         String encodedValue;
-        encodedValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
+        encodedValue = URLEncoder.encode(value, StandardCharsets.UTF_8.name());
         qidoPath.append(TagUtils.toHexString(keyTag) + "=" + encodedValue + "&");
       }
     }
